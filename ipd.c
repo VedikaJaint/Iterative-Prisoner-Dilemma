@@ -126,6 +126,6 @@ int main(){
     if (sum1==sum2) {
         printf("\n\n\nIt's A DRAW!!!\n");
     }
-    
+    print("Vedika");
     return 0;
 }
