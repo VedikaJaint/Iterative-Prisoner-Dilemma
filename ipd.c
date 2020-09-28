@@ -1,131 +1,135 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <time.h>
 
-int computer_move(int comp_move)
-{
-    srand((unsigned int)time(0));
-    if(rand()%2 == 0)
-        comp_move=1;
-    else
-        comp_move=2;
-    
-    return comp_move;
-};
+void display_names() {
+	char p1[100],p2[100];
+	printf("Enter name of first players\n");                                    //Input name of 1st players
+	fgets(p1, sizeof(p1), stdin);
 
-int update_score_p1(int p1_move, int p2_move){
-    int score_p1=0,score_p2=0;
-    if (p1_move==1 && p2_move==1)
-    {
-        score_p1=3;
-        score_p2=3;
-    }
-    if (p1_move==1 && p2_move==2)
-    {
-        score_p1=0;
-        score_p2=5;
-        
-    }
-    if (p1_move==2 && p2_move==1)
-    {
-        score_p1=5;
-        score_p2=0;
-         
-    }
-    if (p1_move==2 && p2_move==2)
-    {
-        score_p1=1;
-        score_p2=1;
-        
-    }
-    
-    return score_p1;
-};
+	printf("Enter name of second players\n");
+	fgets(p2, sizeof(p2), stdin);
 
-int update_score_p2(int p1_move, int p2_move){
-    int score_p1=0,score_p2=0;
-    if (p1_move==1 && p2_move==1) {
-        score_p1=3;
-        score_p2=3;
-    }
-    if (p1_move==1 && p2_move==2) {
-        score_p1=0;
-        score_p2=5;
-        
-    }
-    if (p1_move==2 && p2_move==1) {
-        score_p1=5;
-        score_p2=0;
-         
-    }
-    if (p1_move==2 && p2_move==2) {
-        score_p1=1;
-        score_p2=1;
-        
-    }
-    
-    return score_p2;
-};
-
-
-int comp_move;
-
-int main(){
-    int score_p1,score_p2;
-    int rounds;
-    printf("Enter Number Of Rounds:");
-    scanf("%d",&rounds);
-    if (rounds==0) {
-        printf("\n\nError!!! Rounds shall be 1 or more than 1!!!\n\n");
-    }
-    int final_p1[rounds],final_p2[rounds];
-    
-    for (int i=0; i<rounds; i++) {
-        printf("\n\nROUND %d",i+1);
-        int p1_move;
-        
-        printf("\n\nEnter 1 to Cooperate, 2 to Defect, 0 to Quit\n");
-        scanf("%d",&p1_move);
-        int p2_move=computer_move(comp_move);
-        
-            if (p1_move==1 || p1_move==2) {
-                printf("Player 1's move is:%d & Player 2's move is:%d",p1_move,p2_move);
-            score_p1=update_score_p1(p1_move, p2_move);
-            score_p2=update_score_p2(p1_move, p2_move);
-                final_p1[i]=score_p1;
-                final_p2[i]=score_p2;
-            printf("\nPlayer 1's Score:%d\n",score_p1);
-            printf("\nPlayer 2's Score:%d\n",score_p2);
-            }
-            
-            else if (p1_move==0){
-                printf("\nExiting Game!!!\n\n");
-                exit(0);
-            }
-           
-            else
-                printf("\nWrong Input!!! Try Again!!!");
-    }
-    int sum1=0,sum2=0;
-    for (int j=0; j<rounds; j++) {
-        sum1+=final_p1[j];
-        sum2+=final_p2[j];
-    }
-    printf("\n\n\nFinal Score Of Player 1: %d",sum1);
-    printf("\n\n\nFinal Score Of Player 2: %d",sum2);
-    
-    if (sum1>sum2) {
-        printf("\n\n\nPlayer 1 Wins!!!\n");
-    }
-    
-    if (sum1<sum2) {
-        printf("\n\n\nPlayer 2 Wins!!!\n");
-    }
-    
-    if (sum1==sum2) {
-        printf("\n\n\nIt's A DRAW!!!\n");
-    }
-    
-    return 0;
+	printf("Player1: ");
+	puts(p1);
+	printf("Player2: ");
+	puts(p2);
 }
+int main() {
+
+	int table[2][4]= {
+		{2,2,0,0},
+		{0,0,1,1}
+	};
+	int i=0,j=0,k=0,count=0;
+	int a1[2],a2[2],a3[2],a4[2];
+
+	display_names();                                                             //display_names
+	printf("             Player1\n");
+	printf("             X      Y\n");
+	printf("Player2  ");
+	for(i=0; i<2; i++) {
+		if(i==0) {
+			printf("X  ");
+		} else {
+			printf("         Y  ");
+		}
+		for(j=0; j<4; j++) {
+			printf("%d ",table[i][j]);
+			if(j==1) {
+				printf("  ");
+			}
+		}
+		printf("\n");
+	}
+
+
+	printf("\nnash_equlibrium\n\n");
+	printf("Case1:\n");
+	printf("If player1 chooses X\n");
+	printf("Player2 has two options X or Y\n");
+	if(table[0][0]>table[1][0]) {
+		printf("Player2 chooses X\n\n");
+		a1[0]=0;
+		a1[1]=0;
+	} else {
+		printf("Player2 chooses Y\n\n");
+		a1[0]=1;
+		a1[1]=0;
+	}
+
+	printf("If player1 chooses Y\n");
+	printf("Player2 has two options X or Y\n");
+	if(table[0][2]>table[1][2]) {
+		printf("Player2 chooses X\n\n");
+		a2[0]=0;
+		a2[1]=2;
+	} else {
+		printf("Player2 chooses Y\n\n");
+		a2[0]=1;
+		a2[1]=2;
+	}
+
+	printf("Case2:\n");
+	printf("If player2 chooses X\n");
+	printf("Player1 has two options X or Y\n");
+	if(table[0][1]>table[0][3]) {
+		printf("Player1 chooses X\n\n");
+		a3[0]=0;
+		a3[1]=1;
+	} else {
+		printf("Player1 chooses Y\n\n");
+		a3[0]=0;
+		a3[1]=3;
+	}
+
+	printf("If player2 chooses Y\n");
+	printf("Player1 has two options X or Y\n");
+	if(table[1][1]>table[1][3]) {
+		printf("Player1 chooses X\n\n");
+		a4[0]=1;
+		a4[1]=1;
+	} else {
+		printf("Player1 chooses Y\n\n");
+		a4[0]=1;
+		a4[1]=3;
+	}
+
+	printf("\nCalculating Nash Equilibrium\n");
+	
+	if(a1[0]==0 && a1[1]==0) {
+		if(a3[0]==0 && a3[1]==1) {
+			printf("Nash Equilibrium if both player chooses 'X':(X,X)\n");
+			count++;
+		}
+	} else {
+		if(a4[0]==1 && a4[1]==1) {
+			printf("Nash Equilibrium if player1 chooses 'X' and player2 chooses 'Y':(X,Y)\n");
+			count++;
+		}
+	}
+	if(a2[0]==0 && a2[1]==2) {
+		if(a3[0]==0 && a3[1]==3) {
+			printf("Nash Equilibrium if player1 chooses 'Y' and player2 chooses 'X':(Y,X)\n");
+			count++;
+		}
+	} else {
+		if(a4[0]==1 && a4[1]==3) {
+			printf("Nash Equilibrium if both player chooses 'Y':(Y,Y)\n");
+			count++;
+		}
+	}
+	if(count==0)
+	{
+		printf("There is no nash equlibrium");
+	}
+	else
+	{
+		printf("Hence, %d nash equilibrium",count);
+	}
+	
+
+	return 0;
+}
+
+
+
+
